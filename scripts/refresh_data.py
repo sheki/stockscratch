@@ -35,14 +35,14 @@ def main() -> None:
 
     reader = csv.DictReader(lines[header_idx:])
     rows = [
-        {"ticker": r["Ticker"], "name": r["Name"], "sector": r["Sector"]}
+        {"ticker": r["Ticker"], "name": r["Name"], "sector": r["Sector"], "annual_report_filed": "", "annual_report_url": ""}
         for r in reader
         if r.get("Ticker") and (r.get("Asset Class") or "").strip() == "Equity"
     ]
 
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT_FILE.open("w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["ticker", "name", "sector"])
+        writer = csv.DictWriter(f, fieldnames=["ticker", "name", "sector", "annual_report_filed", "annual_report_url"])
         writer.writeheader()
         writer.writerows(rows)
 
